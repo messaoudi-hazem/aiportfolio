@@ -189,7 +189,8 @@ export default function App() {
   const [pinnedContact, setPinnedContact] = useState<string | null>(null);
 
   const idRef          = useRef(0);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef    = useRef<any>(null);
+  const handleSendMsgRef  = useRef<(override?: string) => void>(() => {});
   const waveCanvasRef  = useRef<HTMLCanvasElement>(null);
   const inputRef       = useRef<HTMLInputElement>(null);
   // currently playing Cartesia audio — killed before starting a new one
@@ -329,7 +330,7 @@ export default function App() {
     };
     rec.onresult = (e: any) => {
       const t = e.results[0][0].transcript;
-      if (t) handleSendMessage(t);
+      if (t) handleSendMsgRef.current(t);
     };
     rec.onerror = () => stopMic();
     rec.onend   = () => stopMic();
@@ -586,13 +587,14 @@ export default function App() {
       const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const res  = await fetch(`${API}/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg }) });
       const data = await res.json();
-      // Bot message appears when voice starts, fades when voice ends
       speakText(data.reply, data.reply);
     } catch {
       const fb = 'I am currently offline, but you can email me to get in touch.';
       speakText(fb, fb);
     } finally { setLoading(false); }
   };
+  // Keep ref always pointing to latest version so speech recognition can call it
+  handleSendMsgRef.current = handleSendMessage;
 
   return (
     <div className="app-container">
