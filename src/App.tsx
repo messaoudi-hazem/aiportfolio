@@ -8,7 +8,7 @@ import './App.css';
 // --- Global Audio Context ---
 let audioContext: AudioContext;
 let analyser: AnalyserNode;
-let dataArray: Uint8Array;
+let dataArray: Uint8Array<ArrayBuffer>;
 let microphoneStream: MediaStream | null = null;
 let sourceNode: MediaStreamAudioSourceNode | null = null;
 
