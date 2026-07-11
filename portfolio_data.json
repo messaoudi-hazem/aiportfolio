@@ -1,0 +1,299 @@
+{
+  "personal_information": {
+    "name": "Hazem Messaoudi",
+    "location": "Tunisia",
+    "role": "Telecommunications Engineering Student",
+    "education_level": "Second year engineering student",
+    "school": "Esprit School of Engineering Tunisia",
+    "career_goal": "Become a software engineer specialized in artificial intelligence, intelligent systems, AI agents, and scalable software solutions.",
+    "internship_status": "Looking for a 6-month internship opportunity.",
+    "availability": "Available from June 15.",
+    "email": "hazemmessaoudi40@gmail.com",
+    "phone": "+21693043185"
+  },
+
+  "professional_summary": {
+    "description": "Hazem Messaoudi is a telecommunications engineering student passionate about software engineering, artificial intelligence, DevOps, and building intelligent applications. He combines engineering fundamentals with practical experience in full-stack development, machine learning, microservices, and cloud technologies.",
+    "professional_identity": [
+      "Software Engineering Student",
+      "Full Stack Developer",
+      "AI Enthusiast",
+      "Machine Learning Developer",
+      "DevOps Learner"
+    ]
+  },
+
+  "education": {
+    "institution": "Esprit School of Engineering",
+    "field": "Telecommunications Engineering",
+    "skills_acquired": [
+      "Computer networks",
+      "Telecommunications systems",
+      "Programming",
+      "Database systems",
+      "Software architecture",
+      "Cybersecurity fundamentals",
+      "Artificial intelligence"
+    ]
+  },
+
+  "technical_skills": {
+    "programming_languages": [
+      {
+        "name": "Java",
+        "experience": [
+          "Object oriented programming",
+          "Backend development",
+          "Spring Boot applications"
+        ]
+      },
+      {
+        "name": "Python",
+        "experience": [
+          "Machine learning",
+          "Artificial intelligence",
+          "Data processing",
+          "Flask APIs",
+          "NLP projects"
+        ]
+      },
+      {
+        "name": "JavaScript",
+        "experience": [
+          "Frontend development",
+          "Web applications"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "experience": [
+          "Angular applications"
+        ]
+      },
+      {
+        "name": "PHP",
+        "experience": [
+          "Symfony applications",
+          "Backend development"
+        ]
+      }
+    ],
+    "frontend": [
+      "Angular",
+      "React",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "DaisyUI"
+    ],
+    "backend": [
+      "Spring Boot",
+      "Spring MVC",
+      "Spring Data JPA",
+      "Hibernate",
+      "REST APIs",
+      "Symfony",
+      "Doctrine ORM"
+    ],
+    "databases": [
+      "MySQL",
+      "MariaDB",
+      "Database design",
+      "SQL queries",
+      "ORM relationships"
+    ],
+    "devops": [
+      "Docker",
+      "Docker Compose",
+      "Jenkins",
+      "SonarQube",
+      "Kubernetes",
+      "Minikube",
+      "CI/CD pipelines"
+    ],
+    "security": [
+      "Keycloak authentication",
+      "API security concepts",
+      "Cybersecurity fundamentals"
+    ]
+  },
+
+  "artificial_intelligence": {
+    "interests": [
+      "Large Language Models",
+      "AI Agents",
+      "Multi-agent systems",
+      "Retrieval Augmented Generation",
+      "Machine Learning",
+      "Natural Language Processing"
+    ],
+    "machine_learning": [
+      "Dataset preparation",
+      "Model training",
+      "Model evaluation",
+      "Prediction systems"
+    ],
+    "models_explored": [
+      "Random Forest",
+      "SVM",
+      "XGBoost",
+      "Neural Networks",
+      "Transformers"
+    ],
+    "nlp_projects": [
+      {
+        "name": "CodeBERT Programming Language Detection",
+        "description": "An AI project using CodeBERT to analyze source code snippets and detect programming languages."
+      }
+    ]
+  },
+
+  "projects": [
+    {
+      "name": "Formini",
+      "category": "AI Powered Learning Platform",
+      "description": "Formini is an intelligent training and certification platform that personalizes learning journeys using artificial intelligence.",
+      "objective": "Improve online learning by recommending personalized content according to learner behavior and progress.",
+      "users": [
+        "Students",
+        "Teachers",
+        "Trainers"
+      ],
+      "features": [
+        "Course creation",
+        "Course marketplace",
+        "Online quizzes",
+        "Certification system",
+        "Learning progress tracking",
+        "Trainer management",
+        "Student recommendations",
+        "Live communication"
+      ],
+      "technologies": [
+        "Angular",
+        "Spring Boot",
+        "Microservices",
+        "MySQL",
+        "Keycloak",
+        "Machine Learning"
+      ],
+      "machine_learning_features": [
+        "Learner level prediction",
+        "Personalized recommendations",
+        "Learning behavior analysis"
+      ],
+      "dataset_features": [
+        "Quiz score average",
+        "Progress percentage",
+        "Time spent hours",
+        "Average session duration",
+        "Login frequency",
+        "Video completion rate",
+        "Assignments submitted",
+        "Discussion participation"
+      ]
+    },
+    {
+      "name": "Physiotherapy Center Desktop Application",
+      "description": "Desktop application designed to manage physiotherapy center activities.",
+      "features": [
+        "Patient management",
+        "Appointment management",
+        "Administrative operations"
+      ]
+    },
+    {
+      "name": "SolidCare",
+      "description": "Healthcare association web application focused on digital healthcare management."
+    },
+    {
+      "name": "Inkspire",
+      "description": "Digital art gallery application developed using JavaFX."
+    },
+    {
+      "name": "AI Recruiter Assistant",
+      "description": "Personal AI agent designed to answer recruiter questions about Hazem using his CV, portfolio, skills and experiences.",
+      "architecture": [
+        "User interface",
+        "LLM",
+        "RAG pipeline",
+        "Vector database",
+        "Personal knowledge base"
+      ],
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "Vector databases",
+        "LLM APIs"
+      ]
+    }
+  ],
+
+  "devops_experience": {
+    "ci_cd_pipeline": [
+      "Git checkout",
+      "Maven build",
+      "Unit testing",
+      "SonarQube analysis",
+      "Docker image creation",
+      "Deployment"
+    ],
+    "kubernetes_experience": [
+      "Deployments",
+      "Services",
+      "Pods",
+      "Persistent volumes",
+      "Secrets",
+      "ConfigMaps"
+    ]
+  },
+
+  "career_preferences": {
+    "desired_positions": [
+      "AI Engineer Intern",
+      "Software Engineer Intern",
+      "Backend Developer Intern",
+      "Full Stack Developer Intern",
+      "DevOps Intern"
+    ],
+    "preferred_domains": [
+      "Artificial Intelligence",
+      "Software Engineering",
+      "Cloud Computing",
+      "Automation",
+      "Intelligent Systems"
+    ]
+  },
+
+  "personality": {
+    "strengths": [
+      "Fast learner",
+      "Problem solving",
+      "Creative thinking",
+      "Self learning ability",
+      "Adaptability",
+      "Passion for technology"
+    ],
+    "working_style": [
+      "Enjoys solving complex problems",
+      "Likes building complete products",
+      "Interested in learning emerging technologies"
+    ]
+  },
+
+  "recruiter_answers_style": {
+    "tone": [
+      "Professional",
+      "Confident",
+      "Clear",
+      "Technical but understandable"
+    ],
+    "important_rules": [
+      "Never exaggerate experience",
+      "Highlight real projects",
+      "Show motivation to learn",
+      "Explain technical decisions"
+    ]
+  }
+}
