@@ -22,6 +22,24 @@ const initAudioContext = async () => {
   if (audioContext.state === 'suspended') await audioContext.resume();
 };
 
+// ── Mobile audio unlock ───────────────────────────────────
+// iOS/Android block audio.play() unless triggered by a user gesture.
+// We create a silent AudioContext on first tap/click to unlock the audio system.
+let audioUnlocked = false;
+const unlockAudio = () => {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const buf = ctx.createBuffer(1, 1, 22050);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start(0);
+    setTimeout(() => ctx.close(), 500);
+  } catch {}
+};
+
 // ── Orb ──────────────────────────────────────────────────
 function AudioOrb({ isSpeaking, isListening }: { isSpeaking: boolean; isListening: boolean }) {
   const meshRef     = useRef<THREE.Mesh>(null);
@@ -604,7 +622,7 @@ export default function App() {
 
       <div
         className={`orb-wrapper ${isListening ? 'orb-listening' : ''}`}
-        onClick={toggleListen}
+        onClick={() => { unlockAudio(); toggleListen(); }}
         role="button"
         aria-label={isListening ? 'Stop listening' : 'Speak'}
         tabIndex={0}
@@ -701,11 +719,11 @@ export default function App() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') { hideHint(); handleSendMessage(); } }}
-            onFocus={hideHint}
+            onFocus={() => { unlockAudio(); hideHint(); }}
             placeholder={isListening ? 'Listening...' : 'Type a message...'}
             disabled={loading}
           />
-          <button className="icon-btn send-btn" onClick={() => { hideHint(); handleSendMessage(); }} disabled={!input.trim() || loading} title="Send">
+          <button className="icon-btn send-btn" onClick={() => { unlockAudio(); hideHint(); handleSendMessage(); }} disabled={!input.trim() || loading} title="Send">
             <SendIcon />
           </button>
         </div>
