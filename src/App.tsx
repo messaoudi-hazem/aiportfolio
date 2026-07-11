@@ -36,6 +36,10 @@ const unlockAudio = () => {
     src.buffer = buf;
     src.connect(ctx.destination);
     src.start(0);
+    // Also play + immediately pause a real Audio element to unlock HTMLAudioElement
+    const a = new Audio();
+    a.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAVFYAAFRWAAABAAgAZGF0YQAAAAA=';
+    a.play().then(() => a.pause()).catch(() => {});
     setTimeout(() => ctx.close(), 500);
   } catch {}
 };
@@ -212,10 +216,12 @@ export default function App() {
   const waveCanvasRef  = useRef<HTMLCanvasElement>(null);
   const inputRef       = useRef<HTMLInputElement>(null);
   // currently playing Cartesia audio — killed before starting a new one
-  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const activeAudioRef    = useRef<HTMLAudioElement | null>(null);
   const activeMediaSrcRef = useRef<MediaSource | null>(null);
   // id of the bot message currently showing (so we can fade it when interrupted)
   const activeBotMsgIdRef = useRef<number>(-1);
+  // Pre-created audio element — created during user gesture so mobile allows play()
+  const warmAudioRef      = useRef<HTMLAudioElement | null>(null);
   // tracks active fade timers so hover can cancel/resume them
   const fadeTimers     = useRef<Map<number, { fadeId: ReturnType<typeof setTimeout>, removeId: ReturnType<typeof setTimeout> }>>(new Map());
 
@@ -522,11 +528,14 @@ export default function App() {
 
       const mime = 'audio/mpeg';
 
-      // ── iOS Safari: no MediaSource support — download blob first ──
+      // ── iOS / no MediaSource: download blob, play via pre-warmed Audio element ──
       if (isIOS || !MediaSource.isTypeSupported(mime)) {
         const blob = await res.blob();
         const url  = URL.createObjectURL(blob);
-        const audio = new Audio(url);
+        // Reuse the pre-created audio element if available (gesture-unlocked on mobile)
+        const audio = warmAudioRef.current ?? new Audio();
+        warmAudioRef.current = null; // consume it
+        audio.src = url;
         activeAudioRef.current = audio;
         audio.onplay  = onVoiceStart;
         audio.onended = () => {
@@ -537,7 +546,13 @@ export default function App() {
           onVoiceEnd(); URL.revokeObjectURL(url);
           activeAudioRef.current = null; activeBotMsgIdRef.current = -1;
         };
-        audio.play().catch(() => {});
+        const playPromise = audio.play();
+        if (playPromise) playPromise.catch((err) => {
+          console.warn('Audio play blocked:', err);
+          // Show message silently if audio is blocked
+          onVoiceStart();
+          setTimeout(onVoiceEnd, 8000);
+        });
         return;
       }
 
@@ -640,7 +655,12 @@ export default function App() {
 
       <div
         className={`orb-wrapper ${isListening ? 'orb-listening' : ''}`}
-        onClick={() => { unlockAudio(); toggleListen(); }}
+        onClick={() => {
+          unlockAudio();
+          // Pre-create audio element inside gesture so mobile allows play() later
+          if (!warmAudioRef.current) warmAudioRef.current = new Audio();
+          toggleListen();
+        }}
         role="button"
         aria-label={isListening ? 'Stop listening' : 'Speak'}
         tabIndex={0}
@@ -737,11 +757,15 @@ export default function App() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') { hideHint(); handleSendMessage(); } }}
-            onFocus={() => { unlockAudio(); hideHint(); }}
+            onFocus={() => {
+              unlockAudio();
+              if (!warmAudioRef.current) warmAudioRef.current = new Audio();
+              hideHint();
+            }}
             placeholder={isListening ? 'Listening...' : 'Type a message...'}
             disabled={loading}
           />
-          <button className="icon-btn send-btn" onClick={() => { unlockAudio(); hideHint(); handleSendMessage(); }} disabled={!input.trim() || loading} title="Send">
+          <button className="icon-btn send-btn" onClick={() => { unlockAudio(); if (!warmAudioRef.current) warmAudioRef.current = new Audio(); hideHint(); handleSendMessage(); }} disabled={!input.trim() || loading} title="Send">
             <SendIcon />
           </button>
         </div>
