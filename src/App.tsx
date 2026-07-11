@@ -337,8 +337,10 @@ export default function App() {
     if (!SR) return;
     const rec = new SR();
     rec.continuous = false; rec.interimResults = false; rec.lang = 'en-US';
+
     rec.onstart = async () => {
-      setIsListening(true); hideHint();
+      setIsListening(true);
+      hideHint();
       await initAudioContext();
       try {
         microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -346,12 +348,28 @@ export default function App() {
         sourceNode.connect(analyser);
       } catch (e) { console.error(e); }
     };
+
     rec.onresult = (e: any) => {
-      const t = e.results[0][0].transcript;
-      if (t) handleSendMsgRef.current(t);
+      const transcript = e.results[0][0].transcript?.trim();
+      if (!transcript) return;
+      // Stop mic FIRST (releases resources), THEN send the message
+      stopMic();
+      // Small delay so state updates from stopMic flush before handleSendMessage reads them
+      setTimeout(() => handleSendMsgRef.current(transcript), 50);
     };
-    rec.onerror = () => stopMic();
-    rec.onend   = () => stopMic();
+
+    // onerror: stop mic, don't send anything
+    rec.onerror = (e: any) => {
+      console.warn('Speech recognition error:', e.error);
+      stopMic();
+    };
+
+    // onend fires after onresult on mobile — only stop mic if not already stopped
+    rec.onend = () => {
+      setIsListening(false);
+      // Don't call stopMic() here — onresult already did it, or onerror did
+    };
+
     recognitionRef.current = rec;
   }, []);
 
