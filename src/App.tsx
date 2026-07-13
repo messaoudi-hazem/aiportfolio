@@ -684,8 +684,8 @@ export default function App() {
       {/* Header strip */}
       <header className="app-header">
         <div>
-          <div className="app-title">Career AI</div>
-          <div className="app-sub">Your Job Search &amp; Career Companion</div>
+          <div className="app-title">Mssaoudi Hazem Agent</div>
+          <div className="app-sub">My ai  &amp; interview</div>
         </div>
         <button className={`icon-btn ${isMuted ? 'muted' : ''}`} onClick={() => setIsMuted(m => !m)} title={isMuted ? 'Unmute' : 'Mute'}>
           <VolumeIcon muted={isMuted} />
